@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng 8/3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ffe6e9, #ff99a3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            transform: scale(0.75); /* Zoom 75% */
+            transform-origin: top center;
+        }
+
+        /* Hiệu ứng sao lấp lánh */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: clamp(20px, 5vw, 40px);
+            border-radius: 25px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: clamp(300px, 80vw, 600px);
+            position: relative;
+            z-index: 1;
+            border: 2px solid #ffe6e9;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff758f;
+            font-size: clamp(32px, 8vw, 48px);
+            margin: 0 0 20px;
+            text-shadow: 2px 2px 10px rgba(255, 117, 143, 0.4);
+            animation: fadeIn 2s ease-in-out infinite;
+        }
+
+        p {
+            font-family: 'Roboto', sans-serif;
+            color: #555;
+            font-size: clamp(16px, 4vw, 20px);
+            margin: 15px 0;
+            line-height: 1.6;
+            padding: 12px;
+            background: rgba(255, 204, 213, 0.15);
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        p:hover {
+            transform: scale(1.02);
+        }
+
+        .slideshow {
+            position: relative;
+            width: clamp(200px, 60vw, 320px);
+            height: clamp(200px, 60vw, 320px);
+            margin: 25px auto;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 6px solid #ffccd5;
+            box-shadow: 0 6px 18px rgba(255, 153, 163, 0.3);
+        }
+
+        .slideshow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            border-radius: 50%;
+            transform: scale(1);
+        }
+
+        .slideshow img.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Hoa hồng rơi */
+        .rose {
+            position: absolute;
+            width: clamp(20px, 3vw, 30px);
+            height: clamp(20px, 3vw, 30px);
+            background: url('https://img.icons8.com/emoji/30/000000/rose.png') no-repeat center;
+            background-size: contain;
+            animation: fall 5s ease-out infinite;
+            z-index: 0;
+            opacity: 0.9;
+        }
+
+        .music-container {
+            position: relative;
+            margin: 25px auto;
+            width: clamp(200px, 50vw, 300px);
+            height: 80px;
+        }
+
+        iframe {
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Nút nhận quà */
+        .gift-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 25px;
+            background-color: #ff758f;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: clamp(14px, 3vw, 16px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 117, 143, 0.4);
+            z-index: 2;
+            border: none;
+        }
+
+        .gift-btn:hover {
+            background-color: #ff99a3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 117, 143, 0.6);
+        }
+
+        .gift-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 6px rgba(255, 117, 143, 0.4);
+        }
+
+        .gift-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .gift-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 80%;
+            width: 320px;
+            height: 220px;
+            position: relative;
+        }
+
+        .gift-content p {
+            font-size: clamp(16px, 4vw, 20px);
+            margin: 15px 0;
+            background: none;
+            padding: 0;
+        }
+
+        .confirm-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff758f;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: clamp(14px, 3vw, 16px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .confirm-btn:hover {
+            background-color: #ff99a3;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff758f;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: clamp(14px, 3vw, 16px);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .close-btn:hover {
+            background-color: #ff99a3;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0.9;
+                transform: translateY(-100vh) rotate(0deg) scale(0.8);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-50vh) rotate(90deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(360deg) scale(0.8);
+            }
+        }
+
+        @keyframes fadeIn {
+            0%, 100% { opacity: 0.8; text-shadow: 2px 2px 10px rgba(255, 117, 143, 0.4); }
+            50% { opacity: 1; text-shadow: 2px 2px 14px rgba(255, 117, 143, 0.7); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: clamp(15px, 4vw, 30px);
+                width: 90%;
+            }
+
+            h1 {
+                margin-bottom: 15px;
+            }
+
+            p {
+                margin: 10px 0;
+                padding: 10px;
+            }
+
+            .slideshow {
+                margin: 20px auto;
+            }
+
+            .music-container {
+                margin: 20px auto;
+            }
+
+            .gift-content {
+                padding: 20px;
+                width: 80%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiệu ứng sao lấp lánh -->
+    <div class="star" style="top: 10%; left: 20%;"></div>
+    <div class="star" style="top: 30%; left: 50%;"></div>
+    <div class="star" style="top: 50%; left: 80%;"></div>
+    <div class="star" style="top: 70%; left: 10%;"></div>
+
+    <div class="container">
+        <h1>Chúc mừng 8/3</h1>
+        <div class="slideshow">
+            <img src="/images/1754338b14a7a5f9fcb6.jpg" alt="Ảnh 1" class="active">
+            <img src="/images/2b49f2f1d5dd64833dcc.jpg" alt="Ảnh 2">
+            <img src="/images/2e66478360afd1f188be.jpg" alt="Ảnh 3">
+            <img src="/images/429bf322d40e65503c1f.jpg" alt="Ảnh 4">
+            <img src="/images/823a2be20ccebd90e4df.jpg" alt="Ảnh 5">
+            <img src="/images/8fcc46756159d0078948.jpg" alt="Ảnh 6">
+            <img src="/images/9087785f5f73ee2db762.jpg" alt="Ảnh 7">
+            <img src="/images/9526d6fef1d2408c19c3.jpg" alt="Ảnh 8">
+            <img src="/images/a5b88c66ab4a1a14435b.jpg" alt="Ảnh 9">
+            <img src="/images/bb3555ec72c0c39e9ad1.jpg" alt="Ảnh 10">
+        </div>
+        <p>Chúc em một ngày 8/3<br>vui vẻ, hạnh phúc<br>và thật nhiều sức khỏe!</p>
+        <p>Mong em luôn tươi trẻ<br>và thành công<br>trong mọi lựa chọn của mình.</p>
+        <div class="music-container">
+            <iframe src="https://www.youtube.com/embed/vvEVybMTY_8?autoplay=1&mute=1&loop=1&playlist=vvEVybMTY_8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <button class="gift-btn" onclick="showGift()">Nhận quà nào!</button>
+    </div>
+
+    <div class="gift-modal" id="giftModal">
+        <div class="gift-content">
+            <p>Bạn có muốn nhận quà không?</p>
+            <button class="confirm-btn" id="confirmBtn" onclick="moveButton()">Xác nhận nhận quà</button>
+            <button class="close-btn" onclick="hideGift()">Thoát</button>
+        </div>
+    </div>
+
+    <script>
+        // Slideshow
+        const images = document.querySelectorAll('.slideshow img');
+        let currentIndex = 0;
+        function nextSlide() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }
+        setInterval(nextSlide, 3000);
+
+        // Hoa hồng rơi
+        function createRose() {
+            const rose = document.createElement('div');
+            rose.classList.add('rose');
+            rose.style.left = Math.random() * 100 + 'vw';
+            rose.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.body.appendChild(rose);
+            setTimeout(() => rose.remove(), 7000);
+        }
+        setInterval(createRose, 800);
+
+        // Hiển thị và ẩn modal quà
+        function showGift() {
+            document.getElementById('giftModal').style.display = 'flex';
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.style.top = '80px';
+            confirmBtn.style.left = '50%';
+            confirmBtn.style.transform = 'translateX(-50%)';
+        }
+
+        function hideGift() {
+            document.getElementById('giftModal').style.display = 'none';
+        }
+
+        // Di chuyển nút xác nhận ngẫu nhiên
+        function moveButton() {
+            const confirmBtn = document.getElementById('confirmBtn');
+            const modal = document.querySelector('.gift-content');
+            const modalWidth = modal.offsetWidth;
+            const modalHeight = modal.offsetHeight;
+            const btnWidth = confirmBtn.offsetWidth;
+            const btnHeight = confirmBtn.offsetHeight;
+
+            const maxX = modalWidth - btnWidth - 20;
+            const maxY = modalHeight - btnHeight - 60;
+            const minY = 40;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+
+            confirmBtn.style.left = randomX + 'px';
+            confirmBtn.style.top = randomY + 'px';
+            confirmBtn.style.transform = 'none';
+        }
+    </script>
+</body>
+</html>
